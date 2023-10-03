@@ -1,6 +1,8 @@
 package database
 
 import (
+	"article/domain"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -11,6 +13,12 @@ func NewConnection() (*gorm.DB, error) {
 	if err != nil {
 		return db, err
 	}
+
+	// migration
+	db.AutoMigrate(
+		&domain.User{},
+		&domain.Post{},
+	)
 
 	return db, nil
 }
