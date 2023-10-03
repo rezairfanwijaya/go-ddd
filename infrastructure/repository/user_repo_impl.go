@@ -7,15 +7,15 @@ import (
 	"gorm.io/gorm"
 )
 
-type Repository struct {
+type UserRepository struct {
 	db *gorm.DB
 }
 
 func NewRepository(db *gorm.DB) repository.IUserRepository {
-	return &Repository{db}
+	return &UserRepository{db}
 }
 
-func (r *Repository) Save(user domain.User) (domain.User, error) {
+func (r *UserRepository) Save(user domain.User) (domain.User, error) {
 	if err := r.db.Create(user).Error; err != nil {
 		return user, err
 	}
@@ -23,7 +23,7 @@ func (r *Repository) Save(user domain.User) (domain.User, error) {
 	return user, nil
 }
 
-func (r *Repository) FindByEmail(email string) (domain.User, error) {
+func (r *UserRepository) FindByEmail(email string) (domain.User, error) {
 	var user domain.User
 
 	if err := r.db.Where("email = ?", email).Find(&user).Error; err != nil {
