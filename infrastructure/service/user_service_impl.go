@@ -57,7 +57,7 @@ func (u *UserService) Login(input domain.UserLoginRequest) (domain.User, int, er
 
 	err = helper.VerifyPassword(input.Password, userByEmail.Password)
 	if err != nil {
-		return userByEmail, http.StatusInternalServerError, err
+		return userByEmail, http.StatusInternalServerError, fmt.Errorf("wrong password")
 	}
 
 	return userByEmail, http.StatusOK, nil

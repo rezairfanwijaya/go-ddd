@@ -2,14 +2,24 @@ package interfaces
 
 import "article/domain"
 
-type userResponseSignup struct {
+type userSignupResponse struct {
 	Id    int    `json:"id"`
 	Email string `json:"email"`
 }
 
-func FormatUserSignUpResponse(user domain.User) *userResponseSignup {
-	return &userResponseSignup{
+type userLoginResponse struct {
+	Token string `json:"token"`
+}
+
+func FormatUserSignUpResponse(user domain.User) *userSignupResponse {
+	return &userSignupResponse{
 		Id:    user.Id,
 		Email: user.Email,
+	}
+}
+
+func FormatUserLoginResponse(token string) *userLoginResponse {
+	return &userLoginResponse{
+		Token: token,
 	}
 }

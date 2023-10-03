@@ -1,6 +1,7 @@
 package interfaces
 
 import (
+	"article/auth"
 	repo "article/infrastructure/repository"
 	service "article/infrastructure/service"
 	handler "article/interfaces/handler"
@@ -10,9 +11,12 @@ import (
 )
 
 func NewRouter(r *gin.Engine, db *gorm.DB) {
+	jwtService := auth.NewServiceJWT()
+
 	userRepo := repo.NewRepository(db)
 	userService := service.NewUserSerivce(userRepo)
-	userHandler := handler.NewHandlerUser(userService)
+	userHandler := handler.NewHandlerUser(userService, jwtService)
 
 	r.POST("/api/user/signup", userHandler.SignUp)
+	r.POST("/api/user/login", userHandler.Login)
 }
